@@ -20,7 +20,7 @@ app.post("/recipe", function (req, res,next) {
     var date = new Date(Date.now());
     var dateString = date.getFullYear()+"-"+("0" + date.getMonth()).slice(-2)+"-"+("0" + date.getDay()).slice(-2);
     var fileName = dateString+"-"+req.body.receta.title;
-    var recipeText = "--- \n layout: post \n title: \""+req.body.receta.title+"\" \n date: "+dateString+"\n categories: "+req.body.receta.category+"\n ingredientes: \n";
+    var recipeText = "--- \nlayout: post \ntitle: \""+req.body.receta.title+"\" \ndate: "+dateString+"\ncategories: "+req.body.receta.category+"\ningredientes: \n";
     req.body.receta.ingredientes.forEach(ingredient => {
         recipeText += ingredient+"\n";
     });

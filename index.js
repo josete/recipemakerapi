@@ -7,9 +7,16 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 var options = process.argv.slice(2);
 
-app.post("/recipe", function (req, res) {
+app.post("/recipe", function (req, res,next) {
     var date = new Date(Date.now());
     var dateString = date.getFullYear()+"-"+("0" + date.getMonth()).slice(-2)+"-"+("0" + date.getDay()).slice(-2);
     var fileName = dateString+"-"+req.body.receta.title;
@@ -27,7 +34,7 @@ app.post("/recipe", function (req, res) {
     }else{
         fs.writeFileSync(path.join(options[0],fileName+".md"),recipeText);
     }
-    res.sendStatus(200);
+    res.sendStatus(200);    
 });
 
 app.listen(3001);
